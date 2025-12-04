@@ -3,12 +3,14 @@
 | | |
 | :--- | :--- |
 | **Hugging Face Space** | [https://huggingface.co/spaces/StefanCoder1/LoreChat](https://huggingface.co/spaces/StefanCoder1/LoreChat) |
-| **Members** | Jarl Stephansson & Stefan Ivachenko |
+| **Members** | Jarl Stephansson & Stefan Ivchenko |
 
 ---
 
-![Validation losses](figs/spaces.png)
+![Github Spaces](figs/spaces.png)
 
+**ALL THE MODELS TRAINED FOR THIS PROJECT ARE FOUND HERE:** https://huggingface.co/StefanCoder1
+The purpose of this model is to learn more about Homer's great works and mythology! If you need to brush up on The Odyssey or The Iliad, that time is now!
 
 ## Project Overview
 
