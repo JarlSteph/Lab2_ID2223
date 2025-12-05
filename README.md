@@ -28,7 +28,7 @@ Two distinct QA datasets were utilized for fine-tuning.
 
 To enhance the general QA capabilities of the models, we used a subset of the original [The-Tome dataset](https://huggingface.co/datasets/arcee-ai/The-Tome), sourced from the [mlabonne/FineTome-100k](https://huggingface.co/datasets/mlabonne/FineTome-100k) dataset on Hugging Face.
 
-* **Split:** A **train/validation/test** split of **94.5% / 0.5% / 5%** was created for hyperparameter tuning and final evaluation.
+* **Split:** A **train/validation/test** split of **94.5% / 5% / 0.5%** was created for hyperparameter tuning and final evaluation.
 * This dataset was shuffled and combined with the **Stackexchange Mythology** dataset.
 
 ### Stackexchange Mythology
@@ -55,7 +55,7 @@ All models were fine-tuned using the same core **hyperparameters** as the base n
 The initial iteration used the **unsloth/Llama-3.2-1B-bnb-4bit** model.
 
 * **Training:** Trained for **one epoch** (due to compute limitations).
-* **LR Schedule:** Set to **linear** to allow for checkpointing and continuation.
+* **LR Schedule:** Set to **constant** to allow for checkpointing and continuation.
 * **Learning Rate:** Lowered to **$0.0001$**.
 
 ### Tuned Model (Llama-3.2-1B)
@@ -86,7 +86,7 @@ Model evaluation involved two primary methods: a **quantitative metric** analysi
 
 Forward passes were run on the test dataset to calculate **Perplexity (PPL)** and **Loss**.
 
-| Model        | PPL (Perplexity) | Loss        |
+| Model        | Loss             | PPL (Perplexity)|
 | :----------- | :--------------- | :---------- |
 | **Original** | 8.469            | 4767.093    |
 | **Vanilla**  | 8.372            | 4322.123    |
@@ -95,7 +95,7 @@ Forward passes were run on the test dataset to calculate **Perplexity (PPL)** an
 
 ### Qualitative Generation
 
-Models were tested on **10 prompts** from the test dataset, and a separate LLM was used as a judge to determine the best-performing model based on answer quality.
+Models were tested on **10 prompts** from the test dataset, and a separate LLM was used as a judge to determine the best-performing model based on answer quality. The questions and answers are found in the **Generate_eval.csv**. 
 
 * **Qwen:** 7 wins
 * **Tuned (Llama):** 3 wins
@@ -117,3 +117,16 @@ The **Qwen** model was selected for final deployment due to its superior evaluat
     * **Wikipedia pages** for both epics
 * **Final Deployment:** The finished application is deployed on Hugging Face Spaces:
     * **Space URL:** [https://huggingface.co/spaces/StefanCoder1/LoreChat](https://huggingface.co/spaces/StefanCoder1/LoreChat)
+
+
+In order to show the importance of RAG; a example with and without RAG is provided bellow: 
+
+**RAG-answer:**
+![With RAG](figs/w_rag.png)
+
+(**context**: A mosaic depicting Odysseus, from the villa of La Olmeda, Pedrosa de la Vega, Spain, late 4th–5th centuries AD\nTen years after the Achaean Greeks won the Trojan War, Odysseus, king of Ithaca, has yet to return home from Troy. In his absence, 108 boorish suitors court his wife Penelope. Penelope tells them she will remarry when she is done weaving a shawl; however, she secretly unweaves it every night.\n\nThe goddess Athena, disguised first as Mentes then as Mentor, tells Odysseus's son Telemachus to seek news of his father. The two leave Ithaca and visit Nestor, who tells them that Agamemnon, the commander of the Greek army at Troy, was murdered soon after the war. Telemachus travels to Sparta to meet Agamemnon's brother Menelaus, who in turn describes his encounter with the shape-shifting god Proteus. Menelaus says he learned from Proteus that Odysseus is alive, but held captive by the nymph Calypso.)
+
+**Without RAG:**
+![With RAG](figs/without_rag.png)
+
+It is clear that without RAG, the model is still able to produce a coherent answer but with RAG, it is way more specific in its answer. 
